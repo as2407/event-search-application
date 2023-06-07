@@ -1,0 +1,252 @@
+<!--<p>event-card-component works!</p>-->
+<link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"/>
+<div class="container">
+  <div class="row d-flex justify-content-center align-items-center">
+    <div class="col-sm-8 p-0 card">
+      <div class="row pt-2 ms-3" (click)="onBackPress()" style="cursor: pointer">
+        <mat-icon fontIcon="arrow_back_ios" class="col-6 arrow pe-0"></mat-icon>
+        <u class="col-6 back ps-1">Back</u>
+      </div>
+      <div class="row name">
+        <h2>
+          {{eventName}}
+          <span style="cursor: pointer" class="heart-icon">
+            <img src="{{iconClass()}}" class="heart-image" (click)="onFavouriteClick()"/>
+          </span>
+        </h2>
+      </div>
+      <mat-tab-group mat-stretch-tabs=false class="bg-transparent col-sm-12" mat-align-tabs="center" color="a">
+        <mat-tab label="Events">
+          <div class="row mt-5 align-items-center">
+            <div class="col-sm-6 text-center">
+              <div *ngIf="eventInfo && eventInfo.localDate" class="mb-3">
+                <div class="mb-1 heading"><b>Date</b></div>
+                {{eventInfo.localDate}}<br>
+              </div>
+              <div *ngIf="eventInfo && eventInfo.artist" class="mb-3">
+                <div class="mb-1 heading"><b>Artist/Team</b></div>
+                {{eventInfo.artist}}<br>
+              </div>
+              <div *ngIf="eventInfo && eventInfo.venue" class="mb-3">
+                <div class="mb-1 heading"><b>Venue</b></div>
+                {{eventInfo.venue}}<br>
+              </div>
+              <div
+                *ngIf="eventInfo && (eventInfo.segment || eventInfo.genre || eventInfo.subType || eventInfo.subGenre || eventInfo.type)"
+                class="mb-3">
+                <div class="mb-1 heading"><b>Genres</b></div>
+                <!--                {{eventInfo.segment}} | {{eventInfo.genre}} | {{eventInfo.subGenre}} | {{eventInfo.type}} | {{eventInfo.subType}}<br>-->
+                {{combineGenres()}}
+              </div>
+              <div *ngIf="eventInfo && (eventInfo.max && eventInfo.min)" class="mb-3">
+                <div class="mb-1 heading"><b>Price Ranges</b></div>
+                {{eventInfo.min}} - {{eventInfo.max}}<br>
+              </div>
+              <div *ngIf=" eventInfo && eventInfo.statusCode && eventInfo.statusCode === 'onsale'" class="mb-3">
+                <div class="mb-1 heading"><b>Ticket Status</b></div>
+                <span class="event_data" style="background:Green">{{eventInfo.statusCode}}</span><br>
+              </div>
+              <div *ngIf=" eventInfo && eventInfo.statusCode && eventInfo.statusCode === 'offsale'" class="mb-3">
+                <div class="mb-1 heading"><b>Ticket Status</b></div>
+                <span class="event_data" style="background:Red">{{eventInfo.statusCode}}</span><br>
+              </div>
+              <div *ngIf=" eventInfo && eventInfo.statusCode && eventInfo.statusCode === 'cancelled'" class="mb-3">
+                <div class="mb-1 heading"><b>Ticket Status</b></div>
+                <span class="event_data" style="background:Black">{{eventInfo.statusCode}}</span><br>
+              </div>
+              <div *ngIf=" eventInfo && eventInfo.statusCode && eventInfo.statusCode === 'postponed'" class="mb-3">
+                <div class="mb-1 heading"><b>Ticket Status</b></div>
+                <span class="event_data" style="background:Orange">{{eventInfo.statusCode}}</span><br>
+              </div>
+              <div *ngIf=" eventInfo && eventInfo.statusCode && eventInfo.statusCode === 'rescheduled'" class="mb-3">
+                <div class="mb-1 heading"><b>Ticket Status</b></div>
+                <span class="event_data" style="background:Orange">{{eventInfo.statusCode}}</span><br>
+              </div>
+              <div *ngIf=" eventInfo && eventInfo.buyTicket" class="mb-3">
+                <div class="mb-1 heading"><b>Ticket Status</b></div>
+                <a href="{{eventInfo.buyTicket}}" target=”_blank”>Ticketmaster</a><br>
+              </div>
+            </div>
+            <div class="col-sm-6 text-center">
+              <img class="seat_image" src="{{eventInfo?.seat}}">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 mb-5 mt-3 text-center">
+              Share on: <a
+              href="https://twitter.com/intent/tweet?text=Check%20{{eventName}}%20on%20Yelp.&url={{eventInfo?.buyTicket}}"
+              target="_blank"><img class="img me-1" src="assets/twitter-logo-2429.svg"></a> <a
+              href="https://www.facebook.com/sharer/sharer.php?u={{eventInfo?.buyTicket}}&quote=Check%20{{eventName}}%20on%20Yelp"
+              target="_blank"><img class="img ms-1" src="assets/facebook-logo-2867.svg"></a>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="Artist/Teams">
+          <div *ngIf="this.spotifyDetails && this.spotifyDetails.length === 0">
+            <p class="noArtist" style="color: red"><b>No music related artist details to show</b></p>
+          </div>
+          <div *ngIf="spotifyDetails && spotifyDetails.length"
+               [id]="spotifyDetails.length > 1 ? 'carouselExampleControls' : ''"
+               [class]=" spotifyDetails.length > 1 ? 'carousel slide' : ''"
+               data-ride="carousel">
+            <div class="container text-center">
+              <div class="row">
+                <div class="{{i == 0 ? 'carousel-item active' : 'carousel-item'}} "
+                     *ngFor="let o of spotifyDetails; let i = index">
+                  <div class="carousel-inner please_correct ">
+                    <!--                  <div class="{{i == 0 ? 'carousel-item active' : 'carousel-item'}} " *ngFor="let o of spotifyDetails; let i = index">-->
+                    <div class="container">
+                      <div class="row firstRow">
+                        <div class="col-sm-3">
+                          <img class="spotifyImg ms-0 me-2 pe-0 text-center" src="{{o.image}}"> <br>
+                          <div class="text-center mt-2 pe-2"
+                               style="color: aquamarine; font-size: 15px">{{o.name.toUpperCase()}}</div>
+                        </div>
+                        <div class="col-sm-3 text-center">
+                          <div class="row mb-2 mt-5 mx-0 text-center" style="color: aquamarine"><b>Popularity</b></div>
+                          <!--                          https://stackoverflow.com/questions/54547166/text-inside-the-mat-progress-bar-in-angular-material-->
+                          <mat-progress-spinner class="example-margin text-center"
+                                                color="warn"
+                                                mode="determinate"
+                                                value="{{o.popularity}}"
+                                                style="width:30px;
+                                                  height:30px;
+                                                  justify-content:center;
+                                                  align-items: center;
+                                                  margin-left:42%">
+                          </mat-progress-spinner>
+                          <div style="position:relative; top:-25px; left:3.4%; font-size: 9px;">{{o.popularity}}
+                          </div>
+
+                        </div>
+                        <div class="col-sm-3 text-center">
+                          <div class="row mb-2 mt-5 mx-0 text-center" style="color: aquamarine"><b>Followers</b></div>
+                          {{o.followers.toLocaleString('en-US')}}
+                        </div>
+                        <div class="col-sm-3 text-center">
+                          <div class="row mb-2 mt-5 mx-0 text-center" style="color: aquamarine"><b>Spotify Link</b>
+                          </div>
+                          <a href="{{o.link}}" target=”_blank”><img src="assets/Spotify-Icon-Logo.wine.svg"
+                                                                    class="spotifyIcon"></a>
+                        </div>
+                      </div>
+                      <div class="text-start album mt-3 me-0" style="color: aquamarine">
+                        Album featuring {{o.name}}
+                      </div>
+                      <div class="row ms-0 ps-0">
+                        <div class="col-sm-4 mt-4 p-0">
+                          <img src="{{o.album[0]}}" class="albumSpotify m-0 p-0 ">
+                        </div>
+                        <div class="col-sm-4 mt-4 p-0">
+                          <img src="{{o.album[1]}}" class="albumSpotify m-0 p-0 ">
+                        </div>
+                        <div class="col-sm-4 mt-4 p-0">
+                          <img src="{{o.album[2]}}" class="albumSpotify m-0 p-0 ">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <a class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+               data-bs-slide="prev">
+              <span *ngIf="spotifyDetails.length > 1" class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </a>
+            <a class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+               data-bs-slide="next">
+              <span *ngIf="spotifyDetails.length > 1" class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </a>
+          </div>
+        </mat-tab>
+        <mat-tab label="Venue">
+          <div class="row mt-5 align-items-center">
+            <div class="col-sm-6 pe-4 text-center">
+              <div *ngIf="eventInfo && eventInfo.venue" class="mb-3">
+                <div class="mb-1 heading"><b>Name</b></div>
+                {{eventInfo.venue}}<br>
+              </div>
+              <div *ngIf="venueInfo && (venueInfo.address || venueInfo.city || venueInfo.state)" class="mb-3">
+                <div class="mb-1 heading"><b>Address</b></div>
+                {{combineAddress()}}
+              </div>
+              <div *ngIf="venueInfo && venueInfo.phone" class="mb-3">
+                <div class="mb-1 heading"><b>Phone Number</b></div>
+                {{venueInfo.phone}}<br>
+              </div>
+            </div>
+            <div class="col-sm-6 text-center pe-4">
+
+              <div *ngIf="venueInfo && venueInfo.openHours">
+                <div class="mb-1 heading"><b>Open Hours</b></div>
+                {{(ohShowmore) ? venueInfo.openHours : venueInfo.openHours | slice:0:80}}
+                <a href="javascript:;" *ngIf="!ohShowmore && venueInfo.openHours.length > 80" (click)="ohShowmore = true">
+                  <br>
+                  <p class="mt-0" style="color: #4497dc">Show More
+                    <span class="material-symbols-outlined pb-0" style="color:white">expand_more</span>
+                  </p>
+                </a>
+                <a href="javascript:;" *ngIf="ohShowmore && venueInfo.openHours.length > 80" (click)="ohShowmore = false">
+                  <br>
+                  <p class="mt-0" style="color: #4497dc">Show Less
+                    <span class=" material-symbols-outlined pb-0" style="color: white">expand_less</span>
+                  </p>
+                </a>
+              </div>
+              <div *ngIf="venueInfo && venueInfo.generalRule">
+                <div class="mb-1 mt-3 heading"><b>General Rule</b></div>
+                {{(gnShowmore) ? venueInfo.generalRule : venueInfo.generalRule | slice:0:80}}
+                <a href="javascript:;" *ngIf="!gnShowmore && venueInfo.generalRule.length > 80" (click)="gnShowmore = true" style="color: #4497dc"><br>Show More<span
+                  class="material-symbols-outlined pb-0" style="color:white;">expand_more</span></a>
+                <a href="javascript:;" *ngIf="gnShowmore && venueInfo.generalRule.length > 80" (click)="gnShowmore = false" style="color: #4497dc"><br>Show Less<span
+                  class="material-symbols-outlined pb-0" style="color: white">expand_less</span></a>
+              </div>
+              <div *ngIf="venueInfo && venueInfo.childRule">
+                <div class="mb-1 mt-3 heading"><b>Child Rule</b></div>
+                {{(crShowmore) ? venueInfo.childRule : venueInfo.childRule | slice:0:80}}
+                <a href="javascript:;" *ngIf="!crShowmore && venueInfo.childRule.length > 80" (click)="crShowmore = true" style="color: #4497dc"><br>Show More<span
+                  class="material-symbols-outlined pb-0" style="color:white;">expand_more</span></a>
+                <a href="javascript:;" *ngIf="crShowmore && venueInfo.childRule.length > 80" (click)="crShowmore = false" style="color: #4497dc"><br>Show Less<span
+                  class="material-symbols-outlined pb-0" style="color: white">expand_less</span></a>
+              </div>
+            </div>
+          </div>
+          <div class="text-center mt-3 mb-3">
+            <button type="button" class="btn btn-danger" (click)="getVenueAddressCoords()" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal">
+              Show venue on Google map
+            </button>
+          </div>
+
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>
+<!--    <div class="col-md-8 col-lg-6 col-xl-5">-->
+
+
+<!-- Modal -->
+<div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel" style="color: black"><b>Event Venue</b></h1>
+      </div>
+      <div class="modal-body">
+        <div class="my-google-map">
+          <google-map [width]="null" [options]="mapOptions">
+            <map-marker [position]="marker.position"></map-marker>
+          </google-map>
+        </div>
+      </div>
+      <div class="modal-footer justify-content-start">
+        <button type="button" class="btn btn-dark " data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

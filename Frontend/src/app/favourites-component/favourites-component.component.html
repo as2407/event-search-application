@@ -1,0 +1,37 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+<div class="container" *ngIf="favList.length > 0">
+  <h2 class="mt-5 row justify-content-center align-items-center heading">List of your favourite events</h2>
+  <div class="row justify-content-center align-items-center">
+      <div class="col-sm-8">
+        <table class="table table-hover" style="text-align: center">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Date</th>
+              <th scope="col">Event</th>
+              <th scope="col">Category</th>
+              <th scope="col">Venue</th>
+              <th scope="col">Favourite</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let fav of favList">
+              <td><b>{{fav.serial_number}}</b></td>
+              <td>{{fav.date}}</td>
+              <td>{{fav.event}}</td>
+              <td>{{fav.category}}</td>
+              <td>{{fav.venue}}</td>
+              <td (click)="onDelete(fav.event + '::' + fav.datetime)" style="cursor: pointer">
+                <span class="material-symbols-outlined">delete</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+  </div>
+</div>
+
+<div class="row mt-5 mx-5 justify-content-center align-items-center" *ngIf="favList.length === 0">
+  <div class="col-sm-8 notfound"><b>No favourite events to show</b></div>
+</div>
+

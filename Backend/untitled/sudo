@@ -1,0 +1,4 @@
+COMMAND    PID          USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME
+Google    1197 ankitasamanta   22u  IPv6 0x777200b4a92dbf21      0t0  TCP localhost:54168->localhost:http-alt (ESTABLISHED)
+node      3836 ankitasamanta   23u  IPv6 0x777200b4a92dec21      0t0  TCP *:http-alt (LISTEN)
+node      3836 ankitasamanta   25u  IPv6 0x777200b4a92e02a1      0t0  TCP localhost:http-alt->localhost:54168 (ESTABLISHED)

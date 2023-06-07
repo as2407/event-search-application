@@ -1,0 +1,134 @@
+.card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(500px);
+  font-family: Serif;
+  color: white;
+  border-radius: 5px;
+
+}
+
+.heart1{
+  height: 20px;
+  width: 20px;
+}
+.back {
+  font-size: 18px;
+  margin: 0px;
+  padding: 0px;
+}
+/*b {*/
+/*  color: aquamarine;*/
+/*}*/
+.heading {
+  color: aquamarine;
+}
+div {
+  font-family: sans-serif;
+}
+.name{
+  text-align: center;
+}
+.img {
+
+  height: 30px;
+  width: 30px;
+}
+.arrow {
+  font-size:20px;
+}
+.seat_image {
+  height: 400px;
+  width: 400px;
+}
+::ng-deep .mat-mdc-tab-label-container{
+  background-color: mediumaquamarine;
+  /*border-color: orange;*/
+}
+::ng-deep.mat-tab-label-content{
+  color: white !important;
+}
+
+
+
+
+::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label-active {
+  color:white !important;
+  /*background-color: green;*/
+}
+
+/* ink bar */
+::ng-deep .mat-ink-bar {
+  /*background-color: var(--primary-color,#1F89CE) !important;*/
+}
+
+
+
+
+.carousel-control-next,
+.carousel-control-prev /*, .carousel-indicators */ {
+  filter: invert(100%);
+}
+.spotifyImg {
+  border-radius: 100px;
+  height: 150px;
+  width: 150px;
+}
+.spotifyIcon {
+  border-radius: 100px;
+  height: 50px;
+  width: 50px;
+}
+
+.albumSpotify {
+  height: 150px;
+  width: 150px;
+}
+
+.heart-icon {
+  height: 30px;
+  width: 30px;
+  margin-left: 10px;
+  padding: 0;
+  background: white;
+  border-radius: 50px;
+  display: inline-block;
+}
+
+.heart-image {
+  height: 15px;
+  width: 15px;
+}
+.event_data {
+  padding-left: 5px;
+  padding-right: 5px;
+  border-radius: 3px;
+  padding-bottom: 2px;
+  padding-top: 2px;
+}
+.please_correct {
+  padding: 50px;
+}
+.noArtist {
+  background: white;
+  padding-left: 50px;
+  padding-right: 50px;
+  margin-left: 50px;
+  margin-right: 50px;
+  margin-top: 100px;
+  margin-bottom: 100px;
+  border-radius: 20px;
+  text-align: center;
+}
+
+.firstRow{
+  padding-left: 60px;
+  padding-right: 60px;
+}
+.album {
+  /*margin-top:10px;*/
+  /*margin-bottom: 30px;*/
+  /*margin-right: ;*/
+  padding-left: 50px;
+  color: aquamarine;
+
+}

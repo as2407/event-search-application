@@ -1,0 +1,60 @@
+ <div class = "container py-5 my-5 ">
+    <div class="row d-flex justify-content-center align-items-center">
+      <div class ="col-12 col-md-8 col-lg-6 col-xl-5">
+        <div class = "card">
+          <div class=" eve text-center mx-4 pb-3 pt-4">
+            <h1 style="font-family: serif; font-size: 30px">Events Search</h1>
+          </div>
+          <form #searchForm="ngForm" (ngSubmit)="SubmitForm(searchForm)" ngNativeValidate>
+            <div class="mx-4 my-4">
+              <div class="mb-3">
+                <label class=" same form-label" >Keyword <span style="color: red">*</span></label>
+                <input name="keyword" id="keyword" matInput class="form-control" [(ngModel)]="model.keyword"  type="text" required  [matAutocomplete]="auto" [formControl]="searchKeywordControl">
+                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onPromptSelect()" [displayWith]="displayWith">
+                  <mat-option *ngIf="showSpinner">
+                    <mat-spinner diameter="20"></mat-spinner>
+                  </mat-option>
+                  <mat-option *ngFor="let i of promptList" [value]="i">{{i}}</mat-option>
+                </mat-autocomplete>
+              </div>
+              <div class="row mb-3">
+                <div class="col-sm-6">
+                    <label class=" same form-label">Distance</label>
+                    <input name="distance" class="form-control" value="10" [(ngModel)]="model.distance" type="number">
+                </div>
+                <div class="col-sm-6">
+                  <div class="pe-4">
+                    <label class=" same form-label">Category<span style="color: red"> *</span></label>
+                    <select name="category" class="form-select" [(ngModel)]="model.category">
+                      <option value = "Default" selected>Default</option>
+                      <option value = "Music" >Music</option>
+                      <option value = "Sports"> Sports</option>
+                      <option value="Arts">Arts & Theatre</option>
+                      <option value="Film">Film</option>
+                      <option value="Miscellaneous">Miscellaneous</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class=" same form-label" >Location <span style="color: red">*</span></label>
+                <input [disabled] = "removeLoc()" name="location" class="form-control" type="text" [(ngModel)]="model.location" required>
+              </div>
+              <div class="form-check mb-3">
+                <input name="autoLocation" class="form-check-input" [(ngModel)]="model.autoLocation" type="checkbox" >
+                <label class=" same form-check-label">
+                  Auto-detect your location
+                </label>
+              </div>
+              <div class="text-center">
+                <button type="submit" class="button btn btn-danger me-2">SUBMIT</button>
+                <button type="button" class="button btn btn-primary ms-2" (click)="onReset($event)">CLEAR</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+

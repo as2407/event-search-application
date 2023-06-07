@@ -1,0 +1,17 @@
+.table {
+  background: white;
+  border-radius: 15px;
+}
+
+.heading {
+  color: aquamarine;
+  font-family: sans-serif;
+}
+
+.notfound {
+  color: #c21b1b;
+  background: white;
+  border-radius: 20px;
+  text-align: center;
+  margin: 10px;
+}

@@ -1,0 +1,14 @@
+<!--<p>search-component works!</p>-->
+<!--<app-search-title-bar-component></app-search-title-bar-component>-->
+<app-search-form-component (searchResult) = "searchFormData($event)" (searchReset)="reset($event)"></app-search-form-component>
+<app-result-table-component (eventvenueID)="emitEventVenue($event)"
+                            *ngIf="!viewCard && this.resultArray !== undefined && resultArray !== null && resultArray.length !== 0"
+                            [search20Data] = "this.resultArray"></app-result-table-component>
+<app-event-card-component (backEventEmitter)="onBackPressed($event)"
+                          [eventInfo]="eventDetails"
+                          [venueInfo]="venueDetails"
+                          [eventName] = "name"
+                          [spotifyDetails]="spotifyDetails"
+                          *ngIf="viewCard"></app-event-card-component>
+<app-no-result-component *ngIf="resultArray && resultArray.length === 0"></app-no-result-component>
+
